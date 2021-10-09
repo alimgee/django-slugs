@@ -12,4 +12,9 @@ class Article(models.Model):
     def get_absolute_url(self):
        # return reverse('article_detail', args=[str(self.id)])
        return reverse('article_detail', kwargs={'slug': self.slug}) # added to run slug
+    
+    def save(self, *args, **kwargs): # new
+        if not self.slug:
+            self.slug = slugify(self.title)
+        return super().save(*args, **kwargs)
 
